@@ -13,6 +13,39 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+const posts = []; 
+
+app.get("/", (req, res) => {
+  
+  res.render("home", {homeStartingContent:homeStartingContent, blogTitle:posts, blogPost:posts}); 
+
+})
+
+
+app.get("/about", (req, res) => {
+  res.render("about.ejs", {aboutContent : aboutContent}); 
+})
+
+
+app.get("/contact", (req, res) => {
+  res.render("contact.ejs", {contactContent : contactContent}); 
+})
+
+
+app.get("/compose", (req, res) => {
+  res.render("compose.ejs"); 
+})
+
+app.post("/compose", (req, res) => {
+
+  const post = { 
+    blogTitle : req.body.blogTitleInput, 
+    blogPost : req.body.blogTextInput
+  }
+  posts.push(post); 
+ 
+  res.redirect("/"); 
+})
 
 
 
